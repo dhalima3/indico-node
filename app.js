@@ -16,7 +16,10 @@
 var express = require('express');
 
 var app = express();
-
+var indico = require('indico.io');
+var secrets = require('./config/secrets.js');
+indico.apiKey = secrets.indigoApiKey;
+console.log(indico.apiKey);
 
 // [START hello_world]
 // Say hello!
@@ -25,6 +28,19 @@ app.get('/', function(req, res) {
 });
 // [END hello_world]
 
+app.get('/indico-political', function(req, res) {
+  var result = "";
+  indico.sentiment("This is a decent example")
+    .then(function(res) {
+      console.log(res);
+      //console.log("RESULT BEFORE: " + result);
+      //result = res;
+    }).catch(function(err) {
+      console.warn(err);
+    });
+  res.status(200).send(result);
+  console.log("RESULT AFTER: " + result);
+});
 
 // [START server]
 // Start the server
