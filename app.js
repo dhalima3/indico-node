@@ -19,7 +19,6 @@ var app = express();
 var indico = require('indico.io');
 var secrets = require('./config/secrets.js');
 indico.apiKey = secrets.indigoApiKey;
-console.log(indico.apiKey);
 
 // [START hello_world]
 // Say hello!
