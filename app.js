@@ -16,9 +16,18 @@
 var express = require('express');
 
 var app = express();
+var fs = require('fs');
+var util = require('util');
 var indico = require('indico.io');
 var secrets = require('./config/secrets.js');
+var Twit = require('twit');
 indico.apiKey = secrets.indigoApiKey;
+var T = new Twit({
+    consumer_key:         '...'
+  , consumer_secret:      '...'
+  , access_token:         '...'
+  , access_token_secret:  '...'
+});
 
 // [START hello_world]
 // Say hello!
@@ -43,6 +52,21 @@ app.get('/indico-political', function(req, res) {
     }).catch(function(err) {
       console.warn(err);
     });
+});
+
+//DOESN'T WORK
+var politicianTwitters = ['LincolnChafee', 'HillaryClinton', 'lessig', 'MartinOMalley', 'BernieSanders', 'JimWebbUSA', 'JebBush', 'RealBenCarson', 'ChrisChristie', 'tedcruz', 'CarlyFiorina', 'gov_gilmore', 'GrahamBlog', 'GovMikeHuckabee', 'BobbyJindal', 'JohnKasich', 'GovernorPataki', 'RandPaul', 'marcorubio', 'RickSantorum', 'ScottWalker', 'realDonaldTrump']
+politicianTwitters.forEach(function(name) {
+  var log_file = fs.createWriteStream(__dirname + name + '.log', {flags : 'w'});
+  var log_stdout = process.stdout;
+  console.log = function(d) { //
+    log_file.write(util.format(d) + '\n');
+    log_stdout.write(util.format(d) + '\n');
+  };
+
+  T.get('statuses/user_timeline', {screen_name: name, count: 200}, function(err, data, response) {
+    console.log(data);
+  });
 });
 
 // [START server]
