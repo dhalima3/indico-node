@@ -38,6 +38,16 @@ app.get('/indico-sentiment', function(req, res) {
     });
 });
 
+app.get('/indico-political', function(req, res) {
+  var result = "";
+  indico.political("Those who surrender freedom for security will not have, nor do they deserve, either one.")
+    .then(function(result) {
+        res.status(200).sendStatus(JSON.stringify(result));
+    }).catch(function(err) {
+      console.warn(err);
+    });
+});
+
 // [START server]
 // Start the server
 var server = app.listen(process.env.PORT || 8080, function () {
