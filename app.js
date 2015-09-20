@@ -29,7 +29,7 @@ app.get('/', function(req, res) {
 // [END hello_world]
 
 app.get('/indico-sentiment', function(req, res) {
-  indico.sentiment("This is a decent example")
+  indico.sentiment(req.query.text)
     .then(function(score) {
         res.status(200).sendStatus(score);
     }).catch(function(err) {
@@ -38,7 +38,7 @@ app.get('/indico-sentiment', function(req, res) {
 });
 
 app.get('/indico-political', function(req, res) {
-  indico.political("Those who surrender freedom for security will not have, nor do they deserve, either one.")
+  indico.political(req.query.text)
     .then(function(result) {
         res.status(200).sendStatus(JSON.stringify(result));
     }).catch(function(err) {
