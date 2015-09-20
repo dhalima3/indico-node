@@ -29,7 +29,6 @@ app.get('/', function(req, res) {
 // [END hello_world]
 
 app.get('/indico-sentiment', function(req, res) {
-  var result = "";
   indico.sentiment("This is a decent example")
     .then(function(score) {
         res.status(200).sendStatus(score);
@@ -39,7 +38,6 @@ app.get('/indico-sentiment', function(req, res) {
 });
 
 app.get('/indico-political', function(req, res) {
-  var result = "";
   indico.political("Those who surrender freedom for security will not have, nor do they deserve, either one.")
     .then(function(result) {
         res.status(200).sendStatus(JSON.stringify(result));
