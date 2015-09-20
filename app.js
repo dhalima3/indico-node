@@ -24,14 +24,14 @@ console.log(indico.apiKey);
 // [START hello_world]
 // Say hello!
 app.get('/', function(req, res) {
-  res.status(200).send('Hello, world!');
+  res.status(200).send('Sup. This is the home page.');
 });
 // [END hello_world]
 
 app.get('/indico-sentiment', function(req, res) {
   indico.sentiment(req.query.text)
     .then(function(score) {
-        res.status(200).sendStatus(score);
+        res.send(score);
     }).catch(function(err) {
       console.warn(err);
     });
@@ -40,7 +40,7 @@ app.get('/indico-sentiment', function(req, res) {
 app.get('/indico-political', function(req, res) {
   indico.political(req.query.text)
     .then(function(result) {
-        res.status(200).sendStatus(JSON.stringify(result));
+        res.send(JSON.stringify(result));
     }).catch(function(err) {
       console.warn(err);
     });
